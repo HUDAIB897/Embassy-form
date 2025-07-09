@@ -1,0 +1,72 @@
+export default function EmbassyForm() {
+  const [formData, setFormData] = useState({
+    eNumber: "",
+    fullName: "",
+    dob: "",
+    medicalCenter: "",
+    expiryDate: "",
+    arabicName: "",
+  });
+
+  const [records, setRecords] = useState([]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setRecords([...records, formData]);
+    setFormData({
+      eNumber: "",
+      fullName: "",
+      dob: "",
+      medicalCenter: "",
+      expiryDate: "",
+      arabicName: "",
+    });
+  };
+
+  return (
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">سعودیہ ویزہ فارم</h1>
+
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <input name="eNumber" placeholder="E Number" value={formData.eNumber} onChange={handleChange} className="border p-2 rounded" required />
+        <input name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} className="border p-2 rounded" required />
+        <input type="date" name="dob" placeholder="Date of Birth" value={formData.dob} onChange={handleChange} className="border p-2 rounded" required />
+        <input name="medicalCenter" placeholder="Medical Center" value={formData.medicalCenter} onChange={handleChange} className="border p-2 rounded" required />
+        <input type="date" name="expiryDate" placeholder="Expiry Date" value={formData.expiryDate} onChange={handleChange} className="border p-2 rounded" required />
+        <input name="arabicName" placeholder="Arabic Name" value={formData.arabicName} onChange={handleChange} className="border p-2 rounded" required />
+        <button type="submit" className="bg-blue-600 text-white rounded p-2 col-span-full">Add to List</button>
+      </form>
+
+      <h2 className="text-xl font-semibold mb-2">ریکارڈ لسٹ</h2>
+      <table className="w-full border text-sm">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border p-1">E Number</th>
+            <th className="border p-1">Name</th>
+            <th className="border p-1">DOB</th>
+            <th className="border p-1">Medical Center</th>
+            <th className="border p-1">Expiry</th>
+            <th className="border p-1">Arabic Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {records.map((r, i) => (
+            <tr key={i}>
+              <td className="border p-1">{r.eNumber}</td>
+              <td className="border p-1">{r.fullName}</td>
+              <td className="border p-1">{r.dob}</td>
+              <td className="border p-1">{r.medicalCenter}</td>
+              <td className="border p-1">{r.expiryDate}</td>
+              <td className="border p-1">{r.arabicName}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
